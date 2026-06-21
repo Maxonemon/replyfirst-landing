@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0f0e0c;
+  --orange: #e85c2b;
+  --gold: #c9a84c;
+  --paper: #f5f0e8;
+  --muted: #7a7060;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis owns scrolling; reduced-motion users get native */
+}
+
+body {
+  @apply bg-ink text-paper font-grotesk antialiased;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+::selection {
+  background: var(--orange);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
+/* ---------- editorial film grain (dark sections) ---------- */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---------- type helpers ---------- */
+.kicker {
+  @apply font-grotesk text-xs font-medium uppercase tracking-[0.28em] text-muted;
+}
+
+/* ---------- reveal primitives (GSAP animates these to their final state) ---------- */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+.reveal-line > .reveal-inner {
+  display: block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* Reduced motion: content is shown immediately, JS only does soft fades */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line > .reveal-inner {
+    transform: none;
+  }
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- math section: pinned mode stacks steps for the scrub timeline ---------- */
+.math-step {
+  padding: 4.5rem 0;
+  text-align: center;
+}
+.math-pinned .math-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* tabular figures for anything that counts */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- cards (light sections) ---------- */
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(15, 14, 12, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(15, 14, 12, 0.05);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -24px rgba(15, 14, 12, 0.3);
+    border-color: rgba(15, 14, 12, 0.16);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* ---------- hero: dispatch-board grid background ---------- */
+.dispatch-grid {
+  background-image:
+    linear-gradient(to right, rgba(122, 112, 96, 0.13) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(122, 112, 96, 0.13) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    130% 110% at 50% 0%,
+    rgba(0, 0, 0, 1) 30%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    130% 110% at 50% 0%,
+    rgba(0, 0, 0, 1) 30%,
+    transparent 78%
+  );
+}
