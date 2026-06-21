@@ -12,12 +12,17 @@
 
 html {
   scroll-behavior: auto; /* Lenis owns scrolling; reduced-motion users get native */
+  /* clip (not hidden) kills stray horizontal bleed from full-bleed
+     backgrounds + magnetic-button transforms without creating a scroll
+     container — so the sticky header and GSAP-pinned section still work. */
+  overflow-x: clip;
 }
 
 body {
   @apply bg-ink text-paper font-grotesk antialiased;
   font-size: 16px;
   line-height: 1.65;
+  overflow-x: clip;
 }
 
 ::selection {

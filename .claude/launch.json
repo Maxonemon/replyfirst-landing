@@ -5,7 +5,8 @@
       "name": "replyfirst-landing",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "port": 3000,
+      "port": 3002,
+      "autoPort": true,
       "cwd": "C:\\Users\\abdou\\hvac\\replyfirst-landing"
     }
   ]
